@@ -53,14 +53,14 @@ app.put("/:id", async (req, res) => {
     const id = req.params.id;
     console.log(name);
 
+    const wilderToUpdate = await dataSource
+      .getRepository(Wilder)
+      .findOneBy({ id });
+
+    dataSource.getRepository(Wilder).merge(wilderToUpdate, req.body);
     const updatedWilder = await dataSource
-      .createQueryBuilder()
-      .update(Wilder)
-      .set({
-        name,
-      })
-      .where("id = :id", { id })
-      .execute();
+      .getRepository(Wilder)
+      .save(wilderToUpdate);
 
     console.log("add a new wilder", updatedWilder);
     return res.status(200).send(updatedWilder);
@@ -74,14 +74,11 @@ app.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     console.log(id);
-    const wilder = await dataSource
-      .createQueryBuilder()
-      .delete()
-      .from(Wilder)
-      .where("id = :id", { id })
-      .execute();
-    console.log("delete wilder id", wilder);
-    res.send(wilder);
+
+    const deletedWilder = await dataSource.getRepository(Wilder).delete(id);
+
+    console.log("delete wilder id", deletedWilder);
+    res.send(deletedWilder);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
