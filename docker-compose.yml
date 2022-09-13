@@ -14,8 +14,7 @@ services:
       DEBUG: nodejs-docker-express:*
     networks:
       - dockerlan
-    restart:
-      always
+    restart: always
 
 networks:
   dockerlan:
