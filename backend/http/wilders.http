@@ -1,1 +1,8 @@
-GET http://localhost:3000
+GET http://localhost:5000/api/wilders
+
+POST http://localhost:5000/api/wilders
+Content-Type: application/json
+
+{
+    "name":"Baltringue"
+}
