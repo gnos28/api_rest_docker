@@ -14,13 +14,13 @@ const dataSource = new typeorm.DataSource({
   // logging: ["query", "error"],
 });
 
-app.get("/", async (req, res) => {
+app.get("/wilders", async (req, res) => {
   const listWilders = await dataSource.getRepository(Wilder).find();
   console.log("list all wilders", listWilders);
   res.send(listWilders);
 });
 
-app.get("/:id", async (req, res) => {
+app.get("/wilders/:id", async (req, res) => {
   try {
     const id = req.params.id;
     console.log(id);
@@ -34,7 +34,7 @@ app.get("/:id", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+app.post("/wilders", async (req, res) => {
   try {
     const { name } = req.body;
     console.log(name);
@@ -47,7 +47,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.put("/:id", async (req, res) => {
+app.put("/wilders/:id", async (req, res) => {
   try {
     const { name } = req.body;
     const id = req.params.id;
@@ -70,7 +70,7 @@ app.put("/:id", async (req, res) => {
   }
 });
 
-app.delete("/:id", async (req, res) => {
+app.delete("/wilders/:id", async (req, res) => {
   try {
     const id = req.params.id;
     console.log(id);
