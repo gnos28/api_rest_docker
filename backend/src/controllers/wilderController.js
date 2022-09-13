@@ -61,4 +61,48 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// ************* SKILLS *************
+
+// get skills of a wilder
+router.get("/:id/skills", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const skills = await service.getWilderSkills(id);
+    console.log("skills", skills);
+    if (skills) return res.send(skills);
+    res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+// add skill to a wilder
+router.post("/:id/skills/:skillId", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const skillId = req.params.skillId;
+    const result = await service.addWilderSkill(id, skillId);
+    res.status(201).send(result);
+    // res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+// add skill to a wilder
+router.delete("/:id/skills/:skillId", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const skillId = req.params.skillId;
+    const result = await service.deleteWilderSkill(id, skillId);
+    res.send(result);
+    // res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;

@@ -4,7 +4,7 @@ const dataSource = new typeorm.DataSource({
   type: "sqlite",
   database: "./wildersdb.sqlite",
   synchronize: true,
-  entities: [require("../models/Wilder")],
+  entities: [require("../models/Wilder"), require("../models/Skills")],
   // logging: ["query", "error"],
 });
 
