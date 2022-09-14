@@ -5,9 +5,15 @@ export default function Layout({ children }) {
   return (
     <>
       <header className={styles.header}>
-        <h1>Wilders Book</h1>
+        <div className={styles.container}>
+          <div>
+            <h1>Wilders Book</h1>
+          </div>
+        </div>
       </header>
-      {children}
+      <div className={styles.container}>
+        <div>{children}</div>
+      </div>
     </>
   );
 }

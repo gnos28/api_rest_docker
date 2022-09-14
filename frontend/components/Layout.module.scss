@@ -7,3 +7,20 @@
     color: white;
   }
 }
+
+.container {
+  padding: 0 2rem;
+}
+
+@media screen and (min-width: 700px) {
+  .container {
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container > div {
+    width: 100%;
+    max-width: 1000px;
+  }
+}
