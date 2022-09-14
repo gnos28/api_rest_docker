@@ -28,6 +28,8 @@ services:
     networks:
       - dockerlan
     restart: always
+    depends_on:
+      - back
 
 networks:
   dockerlan:
