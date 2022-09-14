@@ -53,8 +53,8 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const deletedWilder = await service.delete(id);
-    res.sendStatus(200);
+    await service.delete(id);
+    res.sendStatus(204);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -96,9 +96,8 @@ router.delete("/:id/skills/:skillId", async (req, res) => {
   try {
     const id = req.params.id;
     const skillId = req.params.skillId;
-    const result = await service.deleteWilderSkill(id, skillId);
-    res.send(result);
-    // res.sendStatus(404);
+    await service.deleteWilderSkill(id, skillId);
+    res.sendStatus(204);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);

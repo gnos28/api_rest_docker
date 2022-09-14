@@ -66,11 +66,10 @@ const service = {
       wilderToUpdate.skills = wilderToUpdate.skills.filter(
         (skill) => skill.id !== skillToDelete.id
       );
-      const answer = await wilderRepo.save(wilderToUpdate);
-      console.log("answer", answer);
-      return answer;
+      await wilderRepo.save(wilderToUpdate);
     }
-    throw new Error("wilder don't have this skill");
+    return;
+    // throw new Error("wilder don't have this skill");
   },
 };
 

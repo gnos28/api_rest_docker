@@ -16,6 +16,19 @@ services:
       - dockerlan
     restart: always
 
+  front:
+    build:
+      context: ./frontend/
+      target: dev
+    volumes:
+      - ./frontend:/src
+    command: npm run dev 
+    ports:
+      - "3000:3000"
+    networks:
+      - dockerlan
+    restart: always
+
 networks:
   dockerlan:
     driver: bridge
