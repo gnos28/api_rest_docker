@@ -45,7 +45,7 @@ export default function Home({ wilders }) {
 export async function getStaticProps() {
   let wilders = [];
   try {
-    wilders = (await wilderAPI.get("/wilders")).data;
+    wilders = (await wilderAPI.back.get("/wilders")).data;
   } catch (err) {
     console.error(err);
   }
