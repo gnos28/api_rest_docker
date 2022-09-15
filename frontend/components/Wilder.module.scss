@@ -1,7 +1,8 @@
 .wilderContainer {
+  position: relative;
   background-color: white;
   width: 200px;
-  height: 400px;
+  height: 450px;
 
   padding: 20px;
   border: 1px solid #c9c9c9;
@@ -12,10 +13,54 @@
     color: #f76c6c;
     cursor: pointer;
   }
+  & h3:hover::after {
+    content: " ";
+    position: absolute;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    background-image: url("../public/edit-422.svg");
+    background-size: cover;
+    background-position: center center;
+    color: black;
+    // background-color: yellow;
+  }
 
   & h4 {
     color: #f76c6c;
     font-size: small;
+    cursor: pointer;
+  }
+  & h4:hover::after {
+    content: " ";
+    position: absolute;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    background-image: url("../public/edit-422.svg");
+    background-size: cover;
+    background-position: center center;
+    color: black;
+    // background-color: yellow;
+  }
+
+  & p {
+    // background-color: lightgrey;
+    font-size: small;
+    min-height: 32px;
+    cursor: pointer;
+  }
+  & p:hover::after {
+    content: " ";
+    position: absolute;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    background-image: url("../public/edit-422.svg");
+    background-size: cover;
+    background-position: center center;
+    color: black;
+    // background-color: yellow;
   }
 
   //   display: flex;
@@ -51,5 +96,17 @@
 
   border: none;
   outline: none;
+}
 
+.descriptionInput {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-size: small;
+  width: 100%;
+
+  border: none;
+  outline: none;
 }

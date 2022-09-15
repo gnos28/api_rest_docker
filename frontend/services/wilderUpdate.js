@@ -12,4 +12,17 @@ const updateName = async (id, name) => {
   }
 };
 
-export { updateName };
+const updateDescription = async (id, description) => {
+  console.log("updateDescription", id, description);
+
+  try {
+    const res = (await wilderAPI.front.put(`/wilders/${id}`, { description }))
+      .data;
+
+    console.log("res", res);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { updateName, updateDescription };

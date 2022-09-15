@@ -12,5 +12,9 @@ module.exports = new EntitySchema({
       type: "text",
       unique: true,
     },
+    rating: {
+      type: "int",
+      default: 0,
+    },
   },
 });

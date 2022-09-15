@@ -1,0 +1,34 @@
+.updateSkillsContainer {
+  position: relative;
+  height: 100%;
+  & ul {
+    margin: 0;
+    list-style-type: none;
+    padding-inline-start: 0;
+
+    & li {
+      margin: 4px 0;
+    }
+  }
+}
+
+.activeSkill {
+  background-color: #f76c6c;
+  color: white;
+}
+
+.actions {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  bottom: 0;
+  margin-bottom: 10px;
+  & img {
+    cursor: pointer;
+  }
+
+  & img:hover {
+    color:red;
+  }
+}
