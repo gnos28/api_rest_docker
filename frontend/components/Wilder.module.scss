@@ -12,6 +12,11 @@
     color: #f76c6c;
   }
 
+  & h4 {
+    color: #f76c6c;
+    font-size: small;
+  }
+
   //   display: flex;
   //   flex-direction: column;
   //   justify-content: space-between;
@@ -21,4 +26,10 @@
 
 .wilderContainer:hover {
   filter: brightness(0.97);
+}
+
+.skillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }

@@ -16,9 +16,11 @@ export default function Wilder({ wilder }) {
       {wilder.skills.length > 0 && (
         <div>
           <h4>Wild skills</h4>
-          {wilder.skills.map((skill) => (
-            <Skill key={skill.id} skill={skill} />
-          ))}
+          <div className={styles.skillsContainer}>
+            {wilder.skills.map((skill) => (
+              <Skill key={skill.id} skill={skill} />
+            ))}
+          </div>
         </div>
       )}
     </div>
