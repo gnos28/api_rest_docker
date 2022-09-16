@@ -110,3 +110,17 @@
   border: none;
   outline: none;
 }
+
+.bin {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 1;
+  filter: opacity(0.4);
+  transition: 0.4s filter ease-in-out;
+  cursor: pointer;
+}
+
+.bin:hover {
+  filter: opacity(1);
+}

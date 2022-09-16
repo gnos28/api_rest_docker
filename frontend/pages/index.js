@@ -42,6 +42,8 @@ export default function Home({ wildersStatic, staticSkills }) {
                 key={wilder.id}
                 wilder={wilder}
                 staticSkills={staticSkills}
+                wilders={wilders}
+                setWilders={setWilders}
               />
             ))}
           <AddAWilder wilders={wilders} setWilders={setWilders} />

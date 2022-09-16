@@ -52,6 +52,7 @@ export default function AddAWilder({ wilders, setWilders }) {
       className={[wilderStyles.wilderContainer, styles.dottedContainer].join(
         " "
       )}
+      style={{ border: "none", boxShadow: "none" }}
     >
       {showAddForm ? (
         <>
