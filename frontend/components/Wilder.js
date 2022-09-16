@@ -6,7 +6,7 @@ import styles from "./Wilder.module.scss";
 import { updateName, updateDescription } from "../services/wilderUpdate";
 import { convertLineBreakToBr } from "../services/convert";
 
-export default function Wilder({ wilder }) {
+export default function Wilder({ wilder, staticSkills }) {
   const [nameAsInput, setNameAsInput] = useState(false);
   const [name, setName] = useState(wilder.name);
   const [descriptionAsInput, setDescriptionAsInput] = useState(false);
@@ -15,7 +15,6 @@ export default function Wilder({ wilder }) {
   const [skills, setSkills] = useState(wilder.skills);
 
   const activateInput = (setter) => {
-    console.log("activateInput", setter);
     setter(true);
   };
 
@@ -45,6 +44,7 @@ export default function Wilder({ wilder }) {
           wilderSkills={skills}
           skillSetter={setSkills}
           setOpenModal={setOpenModal}
+          staticSkills={staticSkills}
         />
       ) : (
         <>
@@ -75,7 +75,7 @@ export default function Wilder({ wilder }) {
               onBlur={handleDescriptionUpdate}
               // onKeyDown={(e) => handleKeyDown(e, handleDescriptionUpdate)}
               onChange={(e) => handleChange(e, setDescription)}
-              value={convertLineBreakToBr(description) || ""}
+              value={description || ""}
             />
           ) : (
             <p onClick={() => activateInput(setDescriptionAsInput)}>

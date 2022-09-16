@@ -10,6 +10,7 @@ export default function SkillUpdateModal({
   setOpenModal,
   wilderId,
   skillSetter,
+  staticSkills,
 }) {
   const [skills, setSkills] = useState([]);
   const [activeSkills, setActiveSkills] = useState(wilderSkills);
@@ -41,13 +42,14 @@ export default function SkillUpdateModal({
     return classList.join(" ");
   };
 
+  // à mettre en getStaticProps revalidate: 86400
   const fetchSkills = async () => {
     setSkills(await getSkills());
   };
 
   useEffect(() => {
-    fetchSkills();
-  }, []);
+    setSkills(staticSkills);
+  }, [staticSkills]);
 
   return (
     <div className={styles.updateSkillsContainer}>

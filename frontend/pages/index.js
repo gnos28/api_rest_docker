@@ -6,8 +6,8 @@ import Layout from "../components/Layout";
 import AddAWilder from "../components/AddAWilder";
 import styles from "../styles/Home.module.css";
 
-export default function Home({ wilders }) {
-  // const [wilders, setWilders] = useState([]);
+export default function Home({ wildersStatic, staticSkills }) {
+  const [wilders, setWilders] = useState([]);
 
   // const getWilders = async () => {
   //   try {
@@ -19,9 +19,10 @@ export default function Home({ wilders }) {
   //   }
   // };
 
-  // useEffect(() => {
-  //   getWilders();
-  // }, []);
+  useEffect(() => {
+    setWilders(wildersStatic);
+    console.log(wildersStatic);
+  }, [wildersStatic]);
 
   return (
     <Layout>
@@ -36,8 +37,14 @@ export default function Home({ wilders }) {
         <div className={styles.wildersContainer}>
           {wilders &&
             wilders.length > 0 &&
-            wilders.map((wilder) => <Wilder key={wilder.id} wilder={wilder} />)}
-          <AddAWilder />
+            wilders.map((wilder) => (
+              <Wilder
+                key={wilder.id}
+                wilder={wilder}
+                staticSkills={staticSkills}
+              />
+            ))}
+          <AddAWilder wilders={wilders} setWilders={setWilders} />
         </div>
       </main>
     </Layout>
@@ -45,16 +52,20 @@ export default function Home({ wilders }) {
 }
 
 export async function getStaticProps() {
-  let wilders = [];
+  let wildersStatic = [];
+  let staticSkills = [];
+
   try {
-    wilders = (await wilderAPI.back.get("/wilders")).data;
+    wildersStatic = (await wilderAPI.back.get("/wilders")).data;
+    staticSkills = (await wilderAPI.back.get(`/skills/`)).data;
   } catch (err) {
     console.error(err);
   }
 
   return {
     props: {
-      wilders,
+      wildersStatic,
+      staticSkills,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
