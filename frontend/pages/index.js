@@ -3,6 +3,7 @@ import Head from "next/head";
 import wilderAPI from "../services/wilderAPI";
 import Wilder from "../components/Wilder";
 import Layout from "../components/Layout";
+import AddAWilder from "../components/AddAWilder";
 import styles from "../styles/Home.module.css";
 
 export default function Home({ wilders }) {
@@ -36,6 +37,7 @@ export default function Home({ wilders }) {
           {wilders &&
             wilders.length > 0 &&
             wilders.map((wilder) => <Wilder key={wilder.id} wilder={wilder} />)}
+          <AddAWilder />
         </div>
       </main>
     </Layout>

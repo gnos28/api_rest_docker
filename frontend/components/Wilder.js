@@ -4,6 +4,7 @@ import Skill from "./Skill";
 import SkillUpdateModal from "./SkillUpdateModal";
 import styles from "./Wilder.module.scss";
 import { updateName, updateDescription } from "../services/wilderUpdate";
+import { convertLineBreakToBr } from "../services/convert";
 
 export default function Wilder({ wilder }) {
   const [nameAsInput, setNameAsInput] = useState(false);
@@ -11,6 +12,7 @@ export default function Wilder({ wilder }) {
   const [descriptionAsInput, setDescriptionAsInput] = useState(false);
   const [description, setDescription] = useState(wilder.description);
   const [openModal, setOpenModal] = useState(false);
+  const [skills, setSkills] = useState(wilder.skills);
 
   const activateInput = (setter) => {
     console.log("activateInput", setter);
@@ -38,7 +40,12 @@ export default function Wilder({ wilder }) {
   return (
     <div className={styles.wilderContainer}>
       {openModal ? (
-        <SkillUpdateModal wilderSkills={wilder.skills} setOpenModal={setOpenModal}/>
+        <SkillUpdateModal
+          wilderId={wilder.id}
+          wilderSkills={skills}
+          skillSetter={setSkills}
+          setOpenModal={setOpenModal}
+        />
       ) : (
         <>
           <Image
@@ -68,21 +75,21 @@ export default function Wilder({ wilder }) {
               onBlur={handleDescriptionUpdate}
               // onKeyDown={(e) => handleKeyDown(e, handleDescriptionUpdate)}
               onChange={(e) => handleChange(e, setDescription)}
-              value={description || ""}
+              value={convertLineBreakToBr(description) || ""}
             />
           ) : (
             <p onClick={() => activateInput(setDescriptionAsInput)}>
               {description && description.length
-                ? description
+                ? convertLineBreakToBr(description)
                 : "pas de description"}
             </p>
           )}
 
-          {/* {wilder.skills.length > 0 && ( */}
+          {/* {skills.length > 0 && ( */}
           <div>
             <h4 onClick={() => activateInput(setOpenModal)}>Wild skills</h4>
             <div className={styles.skillsContainer}>
-              {wilder.skills.map((skill) => (
+              {skills.map((skill) => (
                 <Skill key={skill.id} skill={skill} />
               ))}
             </div>

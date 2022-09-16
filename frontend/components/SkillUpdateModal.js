@@ -3,15 +3,25 @@ import Image from "next/image";
 import styles from "./SkillUpdateModal.module.scss";
 import skillStyles from "./Skill.module.scss";
 import { getSkills } from "../services/wilderGet";
+import { updateSkills } from "../services/wilderUpdate";
 
-export default function SkillUpdateModal({ wilderSkills, setOpenModal }) {
+export default function SkillUpdateModal({
+  wilderSkills,
+  setOpenModal,
+  wilderId,
+  skillSetter,
+}) {
   const [skills, setSkills] = useState([]);
   const [activeSkills, setActiveSkills] = useState(wilderSkills);
 
   const handleCancel = () => {
     setOpenModal(false);
   };
-  const handleConfirm = () => {};
+  const handleConfirm = async () => {
+    await updateSkills(wilderId, activeSkills);
+    skillSetter(activeSkills);
+    setOpenModal(false);
+  };
 
   const toggleSkill = (skill) => {
     if (activeSkills.map((skill) => skill.id).includes(skill.id))
@@ -21,8 +31,6 @@ export default function SkillUpdateModal({ wilderSkills, setOpenModal }) {
 
   const getLiClass = (skill) => {
     const classList = [skillStyles.skill];
-
-    console.log("activeSkillszeze", activeSkills);
 
     if (
       activeSkills &&
@@ -39,7 +47,6 @@ export default function SkillUpdateModal({ wilderSkills, setOpenModal }) {
 
   useEffect(() => {
     fetchSkills();
-    console.log("activeSkills", activeSkills);
   }, []);
 
   return (

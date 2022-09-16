@@ -39,8 +39,8 @@ const service = {
     const [wilderToUpdate] = await wilderRepo.findBy({ id: wilderId });
     const [skillToAdd] = await skillsRepo.findBy({ id: skillId });
 
-    console.log("wilderToUpdate", wilderToUpdate);
-    console.log("skillToAdd", skillToAdd);
+    // console.log("wilderToUpdate", wilderToUpdate);
+    // console.log("skillToAdd", skillToAdd);
 
     // vérifier si skill déjà présent
     const currentSkillIdList = wilderToUpdate.skills.map((skill) => skill.id);
@@ -57,8 +57,8 @@ const service = {
     const [wilderToUpdate] = await wilderRepo.findBy({ id: wilderId });
     const [skillToDelete] = await skillsRepo.findBy({ id: skillId });
 
-    console.log("wilderToUpdate", wilderToUpdate);
-    console.log("skillToDelete", skillToDelete);
+    // console.log("wilderToUpdate", wilderToUpdate);
+    // console.log("skillToDelete", skillToDelete);
 
     // vérifier si skill déjà présent
     const currentSkillIdList = wilderToUpdate.skills.map((skill) => skill.id);

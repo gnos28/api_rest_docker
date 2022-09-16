@@ -1,0 +1,8 @@
+.dottedContainer {
+  //   border: 5px dashed #f76c6c8a;
+  border: none;
+  box-shadow: none;
+
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='7' ry='7' stroke='%23f76c6c' stroke-width='9' stroke-dasharray='6%2c 20' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 7px;
+}

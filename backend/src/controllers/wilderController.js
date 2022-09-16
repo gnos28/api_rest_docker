@@ -91,7 +91,43 @@ router.post("/:id/skills/:skillId", async (req, res) => {
   }
 });
 
-// add skill to a wilder
+// update multiple skills
+router.put("/:id/skills", async (req, res) => {
+  try {
+    const wilderId = req.params.id;
+    const newSkills = req.body.skills;
+
+    const currentSkills = await service.getWilderSkills(wilderId);
+
+    // console.log("newSkills", newSkills);
+    // console.log("currentSkills", currentSkills);
+
+    const skillsToAdd = newSkills.filter(
+      (newSkill) =>
+        !currentSkills.map((skill) => skill.id).includes(newSkill.id)
+    );
+
+    const skillsToRemove = currentSkills.filter(
+      (currentSkill) =>
+        !newSkills.map((skill) => skill.id).includes(currentSkill.id)
+    );
+
+    await Promise.all([
+      ...skillsToAdd.map((skill) => service.addWilderSkill(wilderId, skill.id)),
+      ...skillsToRemove.map((skill) =>
+        service.deleteWilderSkill(wilderId, skill.id)
+      ),
+    ]);
+
+    res.status(201).send(newSkills);
+    // res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+// remove skill to a wilder
 router.delete("/:id/skills/:skillId", async (req, res) => {
   try {
     const id = req.params.id;
