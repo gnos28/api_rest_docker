@@ -13,6 +13,9 @@
     color: #f76c6c;
     cursor: pointer;
   }
+  & h3:hover {
+    background-color: rgb(250, 250, 250);
+  }
   & h3:hover::after {
     content: " ";
     position: absolute;
@@ -30,6 +33,10 @@
     color: #f76c6c;
     font-size: small;
     cursor: pointer;
+    padding: 1px 0 4px;
+  }
+  & h4:hover {
+    background-color: rgb(250, 250, 250);
   }
   & h4:hover::after {
     content: " ";
@@ -49,11 +56,16 @@
     font-size: small;
     min-height: 32px;
     cursor: pointer;
+    position: relative;
+  }
+  & p:hover {
+    background-color: rgb(250, 250, 250);
   }
   & p:hover::after {
     content: " ";
     position: absolute;
-    right: 20px;
+    top: 0;
+    right: 0;
     width: 20px;
     height: 20px;
     background-image: url("../public/edit-422.svg");
@@ -111,14 +123,32 @@
   outline: none;
 }
 
+// @keyframes binStart {
+//   0% {
+//     transform: scale(0%);
+//   }
+//   100% {
+//     transform: scale(100%);
+//   }
+// }
+
 .bin {
+  // animation: binStart 0.2s ease-in-out both;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: -20px;
+  top: -25px;
+  height: 60px;
+  width: 60px;
+  background-color: white;
+  border-radius: 50%;
   z-index: 1;
   filter: opacity(0.4);
   transition: 0.4s filter ease-in-out;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.15);
 }
 
 .bin:hover {
