@@ -1,6 +1,24 @@
 .skill {
-  border: #f76c6c 1px solid;
-  border-radius: 4px;
-  padding: 4px 6px;
+  // border: #f76c6c 1px solid;
+  // border-radius: 4px;
+  padding: 1px 0px;
   user-select: none;
+  width: 100%;
+  position: relative;
+
+  & > span {
+    font-size: small;
+  }
+}
+
+.starsContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding-right: 3px;
+  cursor: pointer;
 }

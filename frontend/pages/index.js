@@ -9,16 +9,6 @@ import styles from "../styles/Home.module.css";
 export default function Home({ wildersStatic, staticSkills }) {
   const [wilders, setWilders] = useState([]);
 
-  // const getWilders = async () => {
-  //   try {
-  //     const res = (await wilderAPI.get("/wilders")).data;
-  //     setWilders(res);
-  //     console.log("res", res);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
   useEffect(() => {
     setWilders(wildersStatic);
     console.log(wildersStatic);

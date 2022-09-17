@@ -27,7 +27,7 @@ export default function SkillUpdateModal({
   const toggleSkill = (skill) => {
     if (activeSkills.map((skill) => skill.id).includes(skill.id))
       setActiveSkills(activeSkills.filter((s) => s.id !== skill.id));
-    else setActiveSkills([...activeSkills, skill]);
+    else setActiveSkills([...activeSkills, { ...skill, rating: 0 }]);
   };
 
   const getLiClass = (skill) => {
@@ -75,6 +75,7 @@ export default function SkillUpdateModal({
           width={35}
           alt="cancel action"
           onClick={handleCancel}
+          draggable={false}
         />
         <Image
           src="/confirm.svg"
@@ -82,6 +83,7 @@ export default function SkillUpdateModal({
           width={40}
           alt="confirm action"
           onClick={handleConfirm}
+          draggable={false}
         />
       </div>
     </div>

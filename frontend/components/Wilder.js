@@ -17,7 +17,6 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
   const [showBin, setShowBin] = useState(false);
 
   const mouseOverBin = useRef(false);
-  // const binTimer = useRef(0);
 
   const activateInput = (setter) => {
     setter(true);
@@ -28,7 +27,9 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleNameUpdate();
+    console.log(e.key);
+
+    if (e.key === "Enter" || e.key === "Escape") handleNameUpdate();
   };
 
   const handleNameUpdate = async () => {
@@ -48,7 +49,6 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
 
   const handleMouseEnter = () => {
     if (!openModal) setShowBin(true);
-    // binTimer.current = 0;
   };
 
   const handleMouseLeave = () => {
@@ -60,18 +60,8 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
   };
   const handleMouseLeaveBin = () => {
     mouseOverBin.current = false;
-
-    // if (binTimer.current === 0) binTimer.current = new Date().getTime();
-
-    // const currentTime = new Date().getTime();
-
-    // if (currentTime - binTimer.current > 100)
     setShowBin(false);
   };
-
-  // const handleMouseMove = () => {
-  //   binTimer.current = 0;
-  // };
 
   const handleBinClick = async () => {
     await deleteWilder(wilder.id);
@@ -92,6 +82,7 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
             height={40}
             width={40}
             alt="delete this wilder"
+            draggable={false}
           />
         </div>
       )}
@@ -116,6 +107,7 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
               height={221}
               width={200}
               alt="profile picture"
+              draggable={false}
             />
             {nameAsInput ? (
               <input
@@ -128,7 +120,12 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
                 value={name}
               />
             ) : (
-              <h3 onClick={() => activateInput(setNameAsInput)}>{name}</h3>
+              <h3
+                className={styles.overInteraction}
+                onClick={() => activateInput(setNameAsInput)}
+              >
+                {name}
+              </h3>
             )}
             {descriptionAsInput ? (
               <textarea
@@ -142,7 +139,10 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
                 value={description || ""}
               />
             ) : (
-              <p onClick={() => activateInput(setDescriptionAsInput)}>
+              <p
+                className={styles.pOverInteraction}
+                onClick={() => activateInput(setDescriptionAsInput)}
+              >
                 {description && description.length
                   ? convertLineBreakToBr(description)
                   : "pas de description"}
@@ -151,10 +151,12 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
 
             {/* {skills.length > 0 && ( */}
             <div>
-              <h4 onClick={handleSkillClick}>Wild skills</h4>
+              <h4 className={styles.overInteraction} onClick={handleSkillClick}>
+                Wild skills
+              </h4>
               <div className={styles.skillsContainer}>
                 {skills.map((skill) => (
-                  <Skill key={skill.id} skill={skill} />
+                  <Skill key={skill.id} skill={skill} wilderId={wilder.id} />
                 ))}
               </div>
             </div>

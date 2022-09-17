@@ -7,7 +7,10 @@
     padding-inline-start: 0;
 
     & li {
+      border: #f76c6c 1px solid;
+      border-radius: 4px;
       margin: 4px 0;
+      cursor: pointer;
     }
   }
 }
@@ -29,6 +32,6 @@
   }
 
   & img:hover {
-    color:red;
+    color: red;
   }
 }

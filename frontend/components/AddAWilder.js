@@ -44,6 +44,8 @@ export default function AddAWilder({ wilders, setWilders }) {
     const result = await createWilder({ name, description });
     const newWilder = { id: result.id, name, description, skills: [] };
     setWilders([...wilders, newWilder]);
+    setName("");
+    setDescription("");
     setShowAddForm(false);
   };
 
@@ -61,6 +63,7 @@ export default function AddAWilder({ wilders, setWilders }) {
             height={221}
             width={200}
             alt="profile picture"
+            draggable={false}
           />
           {nameAsInput ? (
             <input
@@ -105,6 +108,7 @@ export default function AddAWilder({ wilders, setWilders }) {
               width={35}
               alt="cancel action"
               onClick={handleCancel}
+              draggable={false}
             />
             <Image
               src="/confirm.svg"
@@ -112,6 +116,7 @@ export default function AddAWilder({ wilders, setWilders }) {
               width={40}
               alt="confirm action"
               onClick={handleConfirm}
+              draggable={false}
             />
           </div>
         </>
@@ -125,7 +130,8 @@ export default function AddAWilder({ wilders, setWilders }) {
               src="/add.svg"
               height={221}
               width={200}
-              alt="profile picture"
+              alt="add a new wilder"
+              draggable={false}
             />
           </button>
         </div>

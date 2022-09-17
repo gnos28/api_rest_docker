@@ -80,9 +80,24 @@ router.get("/:id/skills", async (req, res) => {
 // add skill to a wilder
 router.post("/:id/skills/:skillId", async (req, res) => {
   try {
-    const id = req.params.id;
-    const skillId = req.params.skillId;
+    const id = parseInt(req.params.id, 10);
+    const skillId = parseInt(req.params.skillId, 10);
     const result = await service.addWilderSkill(id, skillId);
+    res.status(201).send(result);
+    // res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+// update skill rating
+router.put("/:id/skills/:skillId", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const skillId = parseInt(req.params.skillId, 10);
+    const { rating } = req.body;
+    const result = await service.updateWilderSkill(id, skillId, rating);
     res.status(201).send(result);
     // res.sendStatus(404);
   } catch (err) {
@@ -94,7 +109,7 @@ router.post("/:id/skills/:skillId", async (req, res) => {
 // update multiple skills
 router.put("/:id/skills", async (req, res) => {
   try {
-    const wilderId = req.params.id;
+    const wilderId = parseInt(req.params.id, 10);
     const newSkills = req.body.skills;
 
     const currentSkills = await service.getWilderSkills(wilderId);
