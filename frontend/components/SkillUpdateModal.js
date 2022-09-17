@@ -27,7 +27,8 @@ export default function SkillUpdateModal({
   const toggleSkill = (skill) => {
     if (activeSkills.map((skill) => skill.id).includes(skill.id))
       setActiveSkills(activeSkills.filter((s) => s.id !== skill.id));
-    else setActiveSkills([...activeSkills, { ...skill, rating: 0 }]);
+    else if (activeSkills.length < 5)
+      setActiveSkills([...activeSkills, { ...skill, rating: 0 }]);
   };
 
   const getLiClass = (skill) => {
@@ -54,7 +55,7 @@ export default function SkillUpdateModal({
   return (
     <div className={styles.updateSkillsContainer}>
       <h4>Wild skills</h4>
-      <p>select wilder's skills</p>
+      <p>select a maximum of 5 wilder's skills</p>
       <ul>
         {skills &&
           skills.length &&
