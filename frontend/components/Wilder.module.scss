@@ -1,3 +1,17 @@
+@keyframes displayWilder {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.wilderIntro {
+  animation: displayWilder 0.3s ease-in-out;
+  animation-fill-mode: both;
+}
+
 .wilderContainer {
   position: relative;
   background-color: white;
@@ -90,7 +104,7 @@
   filter: brightness(0.97);
 }
 
-.wilderAnimation:hover {
+.wilderHoverAnimation:hover {
   animation: rotateWilder 0.3s ease-in-out;
   animation-fill-mode: both;
 }

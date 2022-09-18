@@ -33,10 +33,11 @@ export default function Home({ wildersStatic, staticSkills }) {
   }, [wildersStatic]);
 
   useEffect(() => {
-    setAlltags([
-      ...staticSkills.map((skill) => skill.name),
-      ...wildersStatic.map((wilder) => wilder.name),
-    ].sort()
+    setAlltags(
+      [
+        ...staticSkills.map((skill) => skill.name),
+        ...wildersStatic.map((wilder) => wilder.name),
+      ].sort()
     );
   }, []);
 
@@ -67,10 +68,11 @@ export default function Home({ wildersStatic, staticSkills }) {
             wilders.length > 0 &&
             wilders
               .filter(tagFilter)
-              .map((wilder) => (
+              .map((wilder, wilderIndex) => (
                 <Wilder
                   key={wilder.id}
                   wilder={wilder}
+                  wilderIndex={wilderIndex}
                   staticSkills={staticSkills}
                   wilders={wilders}
                   setWilders={setWilders}

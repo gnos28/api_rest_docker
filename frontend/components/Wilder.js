@@ -7,7 +7,13 @@ import { updateName, updateDescription } from "../services/wilderUpdate";
 import { convertLineBreakToBr } from "../services/convert";
 import { deleteWilder } from "../services/wilderDelete";
 
-export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
+export default function Wilder({
+  wilder,
+  wilderIndex,
+  staticSkills,
+  wilders,
+  setWilders,
+}) {
   const [nameAsInput, setNameAsInput] = useState(false);
   const [name, setName] = useState(wilder.name);
   const [descriptionAsInput, setDescriptionAsInput] = useState(false);
@@ -69,7 +75,10 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div
+      style={{ position: "relative", animationDelay: `${wilderIndex / 15}s` }}
+      className={styles.wilderIntro}
+    >
       {showBin && (
         <div
           className={styles.bin}
@@ -87,7 +96,9 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
         </div>
       )}
       <div
-        className={[styles.wilderContainer, styles.wilderAnimation].join(" ")}
+        className={[styles.wilderContainer, styles.wilderHoverAnimation].join(
+          " "
+        )}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         // onMouseMove={handleMouseMove}

@@ -43,6 +43,16 @@ service.update = async (updatedWilder, wilderId) => {
 };
 
 service.delete = async (wilderId) => {
+  const [wilderToDelete] = await service.getById(wilderId);
+  const skillsToDelete = wilderToDelete.skills;
+
+  await Promise.all(
+    skillsToDelete.map((skill) => {
+      const skillsId = skill.id;
+      wilderSkillsRepo.delete({ wilderId, skillsId });
+    })
+  );
+
   return await wilderRepo.delete(wilderId);
 };
 
