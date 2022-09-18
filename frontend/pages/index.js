@@ -1,18 +1,44 @@
 import { useState, useEffect } from "react";
+import { Typeahead } from "react-bootstrap-typeahead";
 import Head from "next/head";
 import wilderAPI from "../services/wilderAPI";
 import Wilder from "../components/Wilder";
 import Layout from "../components/Layout";
 import AddAWilder from "../components/AddAWilder";
+import "bootstrap/dist/css/bootstrap.css";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 import styles from "../styles/Home.module.css";
 
 export default function Home({ wildersStatic, staticSkills }) {
   const [wilders, setWilders] = useState([]);
+  const [alltags, setAlltags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const tagFilter = (wilder) => {
+    if (!selectedTags.length) return true;
+
+    let tagFound = selectedTags.map((tag) => false);
+    selectedTags.forEach((tag, tagIndex) => {
+      if (wilder.name.includes(tag)) tagFound[tagIndex] = true;
+      wilder.skills.forEach((skill) => {
+        if (skill.name === tag) tagFound[tagIndex] = true;
+      });
+    });
+    return tagFound.every((tag) => tag === true);
+  };
 
   useEffect(() => {
     setWilders(wildersStatic);
     console.log(wildersStatic);
   }, [wildersStatic]);
+
+  useEffect(() => {
+    setAlltags([
+      ...staticSkills.map((skill) => skill.name),
+      ...wildersStatic.map((wilder) => wilder.name),
+    ].sort()
+    );
+  }, []);
 
   return (
     <Layout>
@@ -23,19 +49,33 @@ export default function Home({ wildersStatic, staticSkills }) {
       </Head>
 
       <main>
-        <h2>Wilders</h2>
+        <div className={styles.h2Container}>
+          <h2>Wilders</h2>{" "}
+          <Typeahead
+            multiple
+            id="tags"
+            placeholder="Recherchez un wilder ou un skill"
+            onChange={(text) => {
+              setSelectedTags(text);
+            }}
+            options={alltags}
+            selected={selectedTags}
+          />
+        </div>
         <div className={styles.wildersContainer}>
           {wilders &&
             wilders.length > 0 &&
-            wilders.map((wilder) => (
-              <Wilder
-                key={wilder.id}
-                wilder={wilder}
-                staticSkills={staticSkills}
-                wilders={wilders}
-                setWilders={setWilders}
-              />
-            ))}
+            wilders
+              .filter(tagFilter)
+              .map((wilder) => (
+                <Wilder
+                  key={wilder.id}
+                  wilder={wilder}
+                  staticSkills={staticSkills}
+                  wilders={wilders}
+                  setWilders={setWilders}
+                />
+              ))}
           <AddAWilder wilders={wilders} setWilders={setWilders} />
         </div>
       </main>

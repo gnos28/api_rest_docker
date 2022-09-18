@@ -5,3 +5,19 @@
   gap: 10px;
   padding-bottom: 40px;
 }
+
+.h2Container {
+  display: flex;
+  margin: 10px 0 5px;
+  gap: 15px;
+  /* align-items: center; */
+}
+
+.h2Container > h2 {
+  /* display: inline;
+  margin-inline-end: none; */
+}
+
+.h2Container > .rbt {
+  width: 100%;
+}
