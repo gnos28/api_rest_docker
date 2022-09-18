@@ -21,6 +21,7 @@ export default function Wilder({
   const [openModal, setOpenModal] = useState(false);
   const [skills, setSkills] = useState(wilder.skills);
   const [showBin, setShowBin] = useState(false);
+  const [containerClass, setContainerClass] = useState(styles.wilderIntro);
 
   const mouseOverBin = useRef(false);
 
@@ -51,6 +52,9 @@ export default function Wilder({
   const handleSkillClick = () => {
     setShowBin(false);
     activateInput(setOpenModal);
+    // setContainerClass([styles.wilderIntro, styles.wilderFlip].join(" "));
+    // setTimeout(() => activateInput(setOpenModal), 150);
+    // setTimeout(() => setContainerClass(styles.wilderIntro), 300);
   };
 
   const handleMouseEnter = () => {
@@ -77,7 +81,7 @@ export default function Wilder({
   return (
     <div
       style={{ position: "relative", animationDelay: `${wilderIndex / 15}s` }}
-      className={styles.wilderIntro}
+      className={containerClass}
     >
       {showBin && (
         <div

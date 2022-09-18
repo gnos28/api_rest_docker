@@ -25,6 +25,24 @@ a {
   }
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   user-select: none;
+}
+
+div > div.rbt .form-control:focus {
+  border-color: #f76c6c;
+  box-shadow: 0 0 0 0.25rem rgba(253, 77, 13, 0.25);
+}
+
+div > div.rbt .form-control.focus {
+  border-color: #f76c6c;
+  box-shadow: 0 0 0 0.25rem rgba(253, 77, 13, 0.25);
+}
+
+div > div.rbt .rbt-token {
+  color: #f76c6c;
+  background-color: #ffe3e3;
 }
