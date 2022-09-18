@@ -41,12 +41,14 @@ export default function AddAWilder({ wilders, setWilders }) {
 
   const handleConfirm = async () => {
     // add wilder to database
-    const result = await createWilder({ name, description });
-    const newWilder = { id: result.id, name, description, skills: [] };
-    setWilders([...wilders, newWilder]);
-    setName("");
-    setDescription("");
-    setShowAddForm(false);
+    if (name.length) {
+      const result = await createWilder({ name, description });
+      const newWilder = { id: result.id, name, description, skills: [] };
+      setWilders([...wilders, newWilder]);
+      setName("");
+      setDescription("");
+      setShowAddForm(false);
+    }
   };
 
   return (

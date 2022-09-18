@@ -87,7 +87,7 @@ export default function Wilder({ wilder, staticSkills, wilders, setWilders }) {
         </div>
       )}
       <div
-        className={styles.wilderContainer}
+        className={[styles.wilderContainer, styles.wilderAnimation].join(" ")}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         // onMouseMove={handleMouseMove}
