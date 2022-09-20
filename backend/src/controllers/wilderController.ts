@@ -1,5 +1,6 @@
-const express = require("express");
-const service = require("../services/wilderService");
+import express from "express";
+import service from "../services/wilderService";
+import { Skills } from "../models/Skills";
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
     const wilder = await service.getById(id);
     console.log("find a wilder", wilder);
     if (wilder.length) return res.send(wilder);
@@ -40,7 +41,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
     const payload = req.body;
     const updatedWilder = await service.update(payload, id);
     return res.status(201).send(updatedWilder);
@@ -52,7 +53,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
     await service.delete(id);
     res.sendStatus(204);
   } catch (err) {
@@ -66,7 +67,7 @@ router.delete("/:id", async (req, res) => {
 // get skills of a wilder
 router.get("/:id/skills", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
     const skills = await service.getWilderSkills(id);
     console.log("skills", skills);
     if (skills) return res.send(skills);
@@ -110,7 +111,7 @@ router.put("/:id/skills/:skillId", async (req, res) => {
 router.put("/:id/skills", async (req, res) => {
   try {
     const wilderId = parseInt(req.params.id, 10);
-    const newSkills = req.body.skills;
+    const newSkills: Skills[] = req.body.skills;
 
     const currentSkills = await service.getWilderSkills(wilderId);
 
@@ -145,8 +146,8 @@ router.put("/:id/skills", async (req, res) => {
 // remove skill to a wilder
 router.delete("/:id/skills/:skillId", async (req, res) => {
   try {
-    const id = req.params.id;
-    const skillId = req.params.skillId;
+    const id = parseInt(req.params.id, 10);
+    const skillId = parseInt(req.params.skillId, 10);
     await service.deleteWilderSkill(id, skillId);
     res.sendStatus(204);
   } catch (err) {
@@ -155,4 +156,4 @@ router.delete("/:id/skills/:skillId", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const express = require("express");
-const service = require("../services/skillsService");
+import express from "express";
+import service from "../services/skillsService";
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
     const skill = await service.getById(id);
     console.log("find a skill", skill);
     if (skill.length) return res.send(skill);
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const id = req.params.id; // si skill name existe déjà renvoyer une erreur
+    const id = parseInt(req.params.id, 10); // si skill name existe déjà renvoyer une erreur
     const payload = req.body;
     const updatedSkill = await service.update(payload, id);
     return res.status(201).send(updatedSkill);
@@ -52,7 +52,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
     const deletedSkill = await service.delete(id);
     res.sendStatus(204);
   } catch (err) {
@@ -61,4 +61,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const Skills = require("../models/Skills");
-const dataSource = require("../tools/utils");
+import { Skills } from "../models/Skills";
+import dataSource from "../tools/utils";
 
 const repo = dataSource.getRepository(Skills);
 
@@ -8,25 +8,25 @@ const service = {
     return await repo.find();
   },
 
-  getById: async (id) => {
+  getById: async (id: number) => {
     return await repo.findBy({ id });
   },
 
-  create: async (newSkill) => {
+  create: async (newSkill: Skills) => {
     return await repo.save(newSkill);
   },
 
-  update: async (updatedSkill, skillId) => {
+  update: async (updatedSkill: Skills, skillId: number) => {
     const test = await repo.update(skillId, updatedSkill);
     console.log("test", test);
     return await repo.findOneBy({
-      id: parseInt(skillId),
+      id: skillId,
     });
   },
 
-  delete: async (skillId) => {
+  delete: async (skillId: number) => {
     return await repo.delete(skillId);
   },
 };
 
-module.exports = service;
+export default service;
