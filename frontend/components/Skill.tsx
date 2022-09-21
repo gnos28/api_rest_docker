@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./Skill.module.scss";
 import { updateSkillRating } from "../services/wilderUpdate";
+import { IRatedSkill } from "../interfaces/ISkill";
+
+type SkillProps = {
+  skill: IRatedSkill;
+  wilderId: number;
+};
 
 const EMPTY_STAR_URL = "/star_empty.svg";
 const FULL_STAR_URL = "/star_full.svg";
 
-export default function Skill({ skill, wilderId }) {
-  const [rating, setRating] = useState(0);
-  const [stars, setStars] = useState([]);
+export default function Skill({ skill, wilderId }: SkillProps) {
+  const [rating, setRating] = useState<number>(0);
+  const [stars, setStars] = useState<string[]>([]);
 
-  const handleStarClick = async () => {
+  const handleStarClick = async (): Promise<void> => {
     const currentRating = rating;
     const newRating = currentRating > 4 ? 0 : currentRating + 1;
 

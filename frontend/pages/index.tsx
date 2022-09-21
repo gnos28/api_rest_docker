@@ -8,19 +8,26 @@ import AddAWilder from "../components/AddAWilder";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import styles from "../styles/Home.module.css";
+import IWilder from "../interfaces/IWilder";
+import { ISkill } from "../interfaces/ISkill";
 
-export default function Home({ wildersStatic, staticSkills }) {
-  const [wilders, setWilders] = useState([]);
-  const [alltags, setAlltags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+type HomeProps = {
+  wildersStatic: IWilder[];
+  staticSkills: ISkill[];
+};
 
-  const tagFilter = (wilder) => {
+export default function Home({ wildersStatic, staticSkills }: HomeProps) {
+  const [wilders, setWilders] = useState<IWilder[]>([]);
+  const [alltags, setAlltags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const tagFilter = (wilder: IWilder) => {
     if (!selectedTags.length) return true;
 
-    let tagFound = selectedTags.map((tag) => false);
-    selectedTags.forEach((tag, tagIndex) => {
+    let tagFound: boolean[] = selectedTags.map(() => false);
+    selectedTags.forEach((tag: string, tagIndex) => {
       if (wilder.name.includes(tag)) tagFound[tagIndex] = true;
-      wilder.skills.forEach((skill) => {
+      wilder.skills.forEach((skill: ISkill) => {
         if (skill.name === tag) tagFound[tagIndex] = true;
       });
     });
@@ -57,7 +64,7 @@ export default function Home({ wildersStatic, staticSkills }) {
             id="tags"
             placeholder="Recherchez un wilder ou un skill"
             onChange={(text) => {
-              setSelectedTags(text);
+              setSelectedTags(text as string[]);
             }}
             options={alltags}
             selected={selectedTags}
@@ -68,7 +75,7 @@ export default function Home({ wildersStatic, staticSkills }) {
             wilders.length > 0 &&
             wilders
               .filter(tagFilter)
-              .map((wilder, wilderIndex) => (
+              .map((wilder: IWilder, wilderIndex) => (
                 <Wilder
                   key={wilder.id}
                   wilder={wilder}
@@ -86,12 +93,12 @@ export default function Home({ wildersStatic, staticSkills }) {
 }
 
 export async function getStaticProps() {
-  let wildersStatic = [];
-  let staticSkills = [];
+  let wildersStatic: IWilder[] = [];
+  let staticSkills: ISkill[] = [];
 
   try {
-    wildersStatic = (await wilderAPI.back.get("/wilders")).data;
-    staticSkills = (await wilderAPI.back.get(`/skills/`)).data;
+    wildersStatic = (await wilderAPI.back.get<IWilder[]>("/wilders")).data;
+    staticSkills = (await wilderAPI.back.get<ISkill[]>(`/skills/`)).data;
   } catch (err) {
     console.error(err);
   }

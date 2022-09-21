@@ -1,4 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, {
+  useState,
+  useRef,
+  Dispatch,
+  SetStateAction,
+  BaseSyntheticEvent,
+  KeyboardEvent,
+} from "react";
 import Image from "next/image";
 import Skill from "./Skill";
 import SkillUpdateModal from "./SkillUpdateModal";
@@ -6,6 +13,18 @@ import styles from "./Wilder.module.scss";
 import { updateName, updateDescription } from "../services/wilderUpdate";
 import { convertLineBreakToBr } from "../services/convert";
 import { deleteWilder } from "../services/wilderDelete";
+import IWilder from "../interfaces/IWilder";
+import { ISkill } from "../interfaces/ISkill";
+
+type WilderProps = {
+  wilder: IWilder;
+  wilderIndex: number;
+  staticSkills: ISkill[];
+  wilders: IWilder[];
+  setWilders: Dispatch<SetStateAction<IWilder[]>>;
+};
+
+type Setter = Dispatch<SetStateAction<any>>;
 
 export default function Wilder({
   wilder,
@@ -13,43 +32,43 @@ export default function Wilder({
   staticSkills,
   wilders,
   setWilders,
-}) {
-  const [nameAsInput, setNameAsInput] = useState(false);
-  const [name, setName] = useState(wilder.name);
-  const [descriptionAsInput, setDescriptionAsInput] = useState(false);
-  const [description, setDescription] = useState(wilder.description);
-  const [openModal, setOpenModal] = useState(false);
-  const [skills, setSkills] = useState(wilder.skills);
-  const [showBin, setShowBin] = useState(false);
-  const [containerClass, setContainerClass] = useState(styles.wilderIntro);
+}: WilderProps) {
+  const [nameAsInput, setNameAsInput] = useState<boolean>(false);
+  const [name, setName] = useState<string>(wilder.name);
+  const [descriptionAsInput, setDescriptionAsInput] = useState<boolean>(false);
+  const [description, setDescription] = useState<string>(wilder.description);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [skills, setSkills] = useState<IWilder["skills"][0][]>(wilder.skills);
+  const [showBin, setShowBin] = useState<boolean>(false);
+  const [containerClass, setContainerClass] = useState<string>(
+    styles.wilderIntro
+  );
 
-  const mouseOverBin = useRef(false);
+  const mouseOverBin = useRef<boolean>(false);
 
-  const activateInput = (setter) => {
+  const activateInput = (setter: Setter): void => {
     setter(true);
   };
 
-  const handleChange = (e, setter) => {
+  const handleChange = (e: BaseSyntheticEvent, setter: Setter): void => {
     setter(e.target.value);
   };
 
-  const handleKeyDown = (e) => {
-    console.log(e.key);
-
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" || e.key === "Escape") handleNameUpdate();
   };
 
-  const handleNameUpdate = async () => {
+  const handleNameUpdate = async (): Promise<void> => {
     await updateName(wilder.id, name);
     setNameAsInput(false);
   };
 
-  const handleDescriptionUpdate = async () => {
+  const handleDescriptionUpdate = async (): Promise<void> => {
     await updateDescription(wilder.id, description);
     setDescriptionAsInput(false);
   };
 
-  const handleSkillClick = () => {
+  const handleSkillClick = (): void => {
     setShowBin(false);
     activateInput(setOpenModal);
     // setContainerClass([styles.wilderIntro, styles.wilderFlip].join(" "));
@@ -57,25 +76,25 @@ export default function Wilder({
     // setTimeout(() => setContainerClass(styles.wilderIntro), 300);
   };
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (): void => {
     if (!openModal) setShowBin(true);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     if (!mouseOverBin.current) setShowBin(false);
   };
 
-  const handleMouseEnterBin = () => {
+  const handleMouseEnterBin = (): void => {
     mouseOverBin.current = true;
   };
-  const handleMouseLeaveBin = () => {
+  const handleMouseLeaveBin = (): void => {
     mouseOverBin.current = false;
     setShowBin(false);
   };
 
-  const handleBinClick = async () => {
+  const handleBinClick = async (): Promise<void> => {
     await deleteWilder(wilder.id);
-    setWilders(wilders.filter((w) => w.id !== wilder.id));
+    setWilders(wilders.filter((w: IWilder) => w.id !== wilder.id));
   };
 
   return (
@@ -130,7 +149,9 @@ export default function Wilder({
                 type="text"
                 autoFocus
                 onBlur={handleNameUpdate}
-                onKeyDown={(e) => handleKeyDown(e, handleNameUpdate)}
+                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                  handleKeyDown(e)
+                }
                 onChange={(e) => handleChange(e, setName)}
                 value={name}
               />
@@ -145,7 +166,6 @@ export default function Wilder({
             {descriptionAsInput ? (
               <textarea
                 className={styles.descriptionInput}
-                type="text"
                 autoFocus
                 rows={Math.max(description?.split("\n").length || 2, 2)}
                 onBlur={handleDescriptionUpdate}

@@ -1,49 +1,68 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+  BaseSyntheticEvent,
+  KeyboardEvent,
+} from "react";
 import Image from "next/image";
 import wilderStyles from "./Wilder.module.scss";
 import skillUpdateStyles from "./SkillUpdateModal.module.scss";
 import styles from "./AddAWilder.module.scss";
 import { convertLineBreakToBr } from "../services/convert";
 import { createWilder } from "../services/wilderPost";
+import IWilder from "../interfaces/IWilder";
 
-export default function AddAWilder({ wilders, setWilders }) {
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [nameAsInput, setNameAsInput] = useState(false);
-  const [descriptionAsInput, setDescriptionAsInput] = useState(false);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+type Setter<Type> = Dispatch<SetStateAction<Type>>;
 
-  const activateInput = (setter) => {
+type AddAWilderProps = {
+  wilders: IWilder[];
+  setWilders: Setter<IWilder[]>;
+};
+
+export default function AddAWilder({ wilders, setWilders }: AddAWilderProps) {
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [nameAsInput, setNameAsInput] = useState<boolean>(false);
+  const [descriptionAsInput, setDescriptionAsInput] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+
+  const activateInput = (setter: Setter<any>): void => {
     setter(true);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") handleNameUpdate();
   };
 
-  const handleChange = (e, setter) => {
+  const handleChange = (e: BaseSyntheticEvent, setter: Setter<any>): void => {
     setter(e.target.value);
   };
 
-  const handleNameUpdate = async () => {
+  const handleNameUpdate = async (): Promise<void> => {
     setNameAsInput(false);
   };
 
-  const handleDescriptionUpdate = async () => {
+  const handleDescriptionUpdate = async (): Promise<void> => {
     setDescriptionAsInput(false);
   };
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setName("");
     setDescription("");
     setShowAddForm(false);
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (): Promise<void> => {
     // add wilder to database
     if (name.length) {
-      const result = await createWilder({ name, description });
-      const newWilder = { id: result.id, name, description, skills: [] };
+      const result: IWilder = await createWilder({ name, description });
+      const newWilder: IWilder = {
+        id: result.id,
+        name,
+        description,
+        skills: [],
+      };
       setWilders([...wilders, newWilder]);
       setName("");
       setDescription("");
@@ -73,7 +92,7 @@ export default function AddAWilder({ wilders, setWilders }) {
               type="text"
               autoFocus
               onBlur={handleNameUpdate}
-              onKeyDown={(e) => handleKeyDown(e, handleNameUpdate)}
+              onKeyDown={(e) => handleKeyDown(e)}
               onChange={(e) => handleChange(e, setName)}
               value={name}
             />
@@ -85,7 +104,6 @@ export default function AddAWilder({ wilders, setWilders }) {
           {descriptionAsInput ? (
             <textarea
               className={wilderStyles.descriptionInput}
-              type="text"
               autoFocus
               onBlur={handleDescriptionUpdate}
               onChange={(e) => handleChange(e, setDescription)}

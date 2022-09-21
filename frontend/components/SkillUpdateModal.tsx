@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import styles from "./SkillUpdateModal.module.scss";
 import skillStyles from "./Skill.module.scss";
 import { getSkills } from "../services/wilderGet";
 import { updateSkills } from "../services/wilderUpdate";
+import IWilder from "../interfaces/IWilder";
+import { ISkill, IRatedSkill } from "../interfaces/ISkill";
+
+type SkillUpdateModalProps = {
+  wilderSkills: IRatedSkill[];
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
+  wilderId: number;
+  skillSetter: Dispatch<SetStateAction<IRatedSkill[]>>;
+  staticSkills: ISkill[];
+};
 
 export default function SkillUpdateModal({
   wilderSkills,
@@ -11,28 +21,29 @@ export default function SkillUpdateModal({
   wilderId,
   skillSetter,
   staticSkills,
-}) {
-  const [skills, setSkills] = useState([]);
-  const [activeSkills, setActiveSkills] = useState(wilderSkills);
+}: SkillUpdateModalProps) {
+  const [skills, setSkills] = useState<ISkill[]>([]);
+  const [activeSkills, setActiveSkills] =
+    useState<IWilder["skills"][0][]>(wilderSkills);
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setOpenModal(false);
   };
-  const handleConfirm = async () => {
+  const handleConfirm = async (): Promise<void> => {
     await updateSkills(wilderId, activeSkills);
     skillSetter(activeSkills);
     setOpenModal(false);
   };
 
-  const toggleSkill = (skill) => {
-    if (activeSkills.map((skill) => skill.id).includes(skill.id))
-      setActiveSkills(activeSkills.filter((s) => s.id !== skill.id));
+  const toggleSkill = (skill: ISkill): void => {
+    if (activeSkills.map((sk) => sk.id).includes(skill.id))
+      setActiveSkills(activeSkills.filter((sk) => sk.id !== skill.id));
     else if (activeSkills.length < 5)
       setActiveSkills([...activeSkills, { ...skill, rating: 0 }]);
   };
 
-  const getLiClass = (skill) => {
-    const classList = [skillStyles.skill];
+  const getLiClass = (skill: ISkill): string => {
+    const classList: string[] = [skillStyles.skill];
 
     if (
       activeSkills &&
@@ -44,7 +55,7 @@ export default function SkillUpdateModal({
   };
 
   // à mettre en getStaticProps revalidate: 86400
-  const fetchSkills = async () => {
+  const fetchSkills = async (): Promise<void> => {
     setSkills(await getSkills());
   };
 
