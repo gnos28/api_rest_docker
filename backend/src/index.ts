@@ -23,7 +23,7 @@ app.use("/api/skills", skillsController);
 
 const start = async () => {
   await dataSource.initialize();
-  app.listen(5000, () => console.log("listening on port 5000"));
+  app.listen(5000, (): void => console.log("listening on port 5000"));
 };
 
 start();

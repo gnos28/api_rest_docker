@@ -3,7 +3,7 @@ import { Wilder } from "../models/Wilder";
 import { Wilder_Skills } from "../models/Wilder_Skills";
 import { Skills } from "../models/Skills";
 
-const dataSource = new DataSource({
+const dataSource: DataSource = new DataSource({
   type: "sqlite",
   database: "./wildersdb.sqlite",
   synchronize: true,
