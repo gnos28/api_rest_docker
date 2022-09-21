@@ -79,7 +79,7 @@ export default function AddAWilder({ wilders, setWilders }) {
             />
           ) : (
             <h3 onClick={() => activateInput(setNameAsInput)}>
-              {name || "Nom du nouveau wilder"}
+              {name || "New wilder"}
             </h3>
           )}
           {descriptionAsInput ? (
