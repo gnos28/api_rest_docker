@@ -15,7 +15,6 @@ type SkilledWilder = {
   id: number;
   name: string;
   description: string;
-  wilderSkills: Wilder_Skills[];
 };
 
 const wilderRepo: Repository<Wilder> = dataSource.getRepository(Wilder);

@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import { Wilder } from "./Wilder";
 import { Skills } from "./Skills";
 
@@ -7,54 +13,16 @@ export class Wilder_Skills {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  wilderId: number;
-
-  @Column()
-  skillsId: number;
-
   @Column({ nullable: true })
   rating: number;
 
-  @ManyToOne(() => Wilder, (wilder) => wilder.id)
-  wWWilder: Wilder;
+  @Column()
+  @ManyToOne(() => Wilder, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "wilderId" })
+  wilderId: Wilder["id"];
 
-  @ManyToOne(() => Skills, (skills) => skills.id)
-  wSkills: Skills;
+  @Column()
+  @ManyToOne(() => Skills, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "skillsId" })
+  skillsId: Skills["id"];
 }
-
-// const EntitySchema = require("typeorm").EntitySchema;
-
-// module.exports = new EntitySchema({
-//   name: "Wilder_Skills",
-//   tableName: "wilder_skills",
-//   columns: {
-//     id: {
-//       type: "int",
-//       primary: true,
-//       generated: true,
-//     },
-//     wilderId: {
-//       type: "int",
-//     },
-//     skillsId: {
-//       type: "int",
-//     },
-//     rating: {
-//       type: "int",
-//       default: 0,
-//     },
-//   },
-//   relations: {
-//     wilder: {
-//       target: "wilder",
-//       type: "many-to-one",
-//       inverseSide: "wWilder",
-//     },
-//     skills: {
-//       target: "skills",
-//       type: "many-to-one",
-//       inverseSide: "wSkills",
-//     },
-//   },
-// });
