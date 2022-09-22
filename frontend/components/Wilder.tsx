@@ -1,20 +1,12 @@
-import React, {
-  useState,
-  useRef,
-  Dispatch,
-  SetStateAction,
-  BaseSyntheticEvent,
-  KeyboardEvent,
-} from "react";
+import React, { useState, useRef, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import Skill from "./Skill";
 import SkillUpdateModal from "./SkillUpdateModal";
+import InteractiveText from "./InteractiveText";
 import styles from "./Wilder.module.scss";
-import { updateName, updateDescription } from "../services/wilderUpdate";
-import { convertLineBreakToBr } from "../services/convert";
 import { deleteWilder } from "../services/wilderDelete";
 import IWilder from "../interfaces/IWilder";
-import { ISkill } from "../interfaces/ISkill";
+import { ISkill, IRatedSkill } from "../interfaces/ISkill";
 
 type WilderProps = {
   wilder: IWilder;
@@ -24,8 +16,6 @@ type WilderProps = {
   setWilders: Dispatch<SetStateAction<IWilder[]>>;
 };
 
-type Setter = Dispatch<SetStateAction<any>>;
-
 export default function Wilder({
   wilder,
   wilderIndex,
@@ -33,12 +23,8 @@ export default function Wilder({
   wilders,
   setWilders,
 }: WilderProps) {
-  const [nameAsInput, setNameAsInput] = useState<boolean>(false);
-  const [name, setName] = useState<string>(wilder.name);
-  const [descriptionAsInput, setDescriptionAsInput] = useState<boolean>(false);
-  const [description, setDescription] = useState<string>(wilder.description);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [skills, setSkills] = useState<IWilder["skills"][0][]>(wilder.skills);
+  const [skills, setSkills] = useState<IRatedSkill[]>(wilder.skills);
   const [showBin, setShowBin] = useState<boolean>(false);
   const [containerClass, setContainerClass] = useState<string>(
     styles.wilderIntro
@@ -46,31 +32,9 @@ export default function Wilder({
 
   const mouseOverBin = useRef<boolean>(false);
 
-  const activateInput = (setter: Setter): void => {
-    setter(true);
-  };
-
-  const handleChange = (e: BaseSyntheticEvent, setter: Setter): void => {
-    setter(e.target.value);
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter" || e.key === "Escape") handleNameUpdate();
-  };
-
-  const handleNameUpdate = async (): Promise<void> => {
-    await updateName(wilder.id, name);
-    setNameAsInput(false);
-  };
-
-  const handleDescriptionUpdate = async (): Promise<void> => {
-    await updateDescription(wilder.id, description);
-    setDescriptionAsInput(false);
-  };
-
   const handleSkillClick = (): void => {
     setShowBin(false);
-    activateInput(setOpenModal);
+    setOpenModal(true);
     // setContainerClass([styles.wilderIntro, styles.wilderFlip].join(" "));
     // setTimeout(() => activateInput(setOpenModal), 150);
     // setTimeout(() => setContainerClass(styles.wilderIntro), 300);
@@ -143,48 +107,8 @@ export default function Wilder({
               alt="profile picture"
               draggable={false}
             />
-            {nameAsInput ? (
-              <input
-                className={styles.nameInput}
-                type="text"
-                autoFocus
-                onBlur={handleNameUpdate}
-                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
-                  handleKeyDown(e)
-                }
-                onChange={(e) => handleChange(e, setName)}
-                value={name}
-              />
-            ) : (
-              <h3
-                className={styles.overInteraction}
-                onClick={() => activateInput(setNameAsInput)}
-              >
-                {name}
-              </h3>
-            )}
-            {descriptionAsInput ? (
-              <textarea
-                className={styles.descriptionInput}
-                autoFocus
-                rows={Math.max(description?.split("\n").length || 2, 2)}
-                onBlur={handleDescriptionUpdate}
-                // onKeyDown={(e) => handleKeyDown(e, handleDescriptionUpdate)}
-                onChange={(e) => handleChange(e, setDescription)}
-                value={description || ""}
-              />
-            ) : (
-              <p
-                className={styles.pOverInteraction}
-                onClick={() => activateInput(setDescriptionAsInput)}
-              >
-                {description && description.length
-                  ? convertLineBreakToBr(description)
-                  : "pas de description"}
-              </p>
-            )}
-
-            {/* {skills.length > 0 && ( */}
+            <InteractiveText wilder={wilder} type="h3" />
+            <InteractiveText wilder={wilder} type="p" />
             <div>
               <h4 className={styles.overInteraction} onClick={handleSkillClick}>
                 Wild skills
