@@ -3,20 +3,7 @@ import service from "../services/wilderService";
 import { Skills } from "../models/Skills";
 import { Wilder_Skills } from "../models/Wilder_Skills";
 import { Wilder } from "../models/Wilder";
-
-type BaseSkill = {
-  rating: number;
-  id: number;
-  name: string;
-};
-
-type SkilledWilder = {
-  skills: BaseSkill[];
-  id: number;
-  name: string;
-  description: string;
-  wilderSkills: Wilder_Skills[];
-};
+import { BaseSkill, SkilledWilder } from "../interfaces";
 
 const router: Router = express.Router();
 

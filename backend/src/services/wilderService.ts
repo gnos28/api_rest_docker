@@ -3,19 +3,7 @@ import { Skills } from "../models/Skills";
 import { Wilder_Skills } from "../models/Wilder_Skills";
 import dataSource from "../tools/utils";
 import { Repository, DeleteResult } from "typeorm";
-
-type BaseSkill = {
-  rating: number;
-  id: number;
-  name: string;
-};
-
-type SkilledWilder = {
-  skills: BaseSkill[];
-  id: number;
-  name: string;
-  description: string;
-};
+import { BaseSkill, SkilledWilder } from "../interfaces";
 
 const wilderRepo: Repository<Wilder> = dataSource.getRepository(Wilder);
 const skillsRepo: Repository<Skills> = dataSource.getRepository(Skills);
