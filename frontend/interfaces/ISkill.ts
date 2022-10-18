@@ -6,3 +6,4 @@ export interface ISkill {
 export interface IRatedSkill extends ISkill {
   rating: number;
 }
+    
