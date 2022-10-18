@@ -22,7 +22,7 @@ const service = {
   },
 
   update: async (
-    updatedSkill: Skills,
+    updatedSkill: Partial<Omit<Skills, "id">>,
     skillId: number
   ): Promise<Skills | null> => {
     await repo.update(skillId, updatedSkill);

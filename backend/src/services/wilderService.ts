@@ -41,11 +41,11 @@ const service = {
   getById: async (id: number): Promise<SkilledWilder> => {
     return (await rebuildEager(await wilderRepo.findBy({ id })))[0];
   },
-  create: async (newWilder: Wilder): Promise<Wilder> => {
+  create: async (newWilder: Partial<Omit<Wilder, "id">>): Promise<Wilder> => {
     return await wilderRepo.save(newWilder);
   },
   update: async (
-    updatedWilder: Wilder,
+    updatedWilder: Partial<Omit<Wilder, "id">>,
     wilderId: number
   ): Promise<SkilledWilder> => {
     const test = await wilderRepo.update(wilderId, updatedWilder);
