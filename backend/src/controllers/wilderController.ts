@@ -21,8 +21,8 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const id: number = parseInt(req.params.id, 10);
-    const wilder: SkilledWilder[] = await service.getById(id);
-    if (wilder.length) return res.send(wilder);
+    const wilder: SkilledWilder = await service.getById(id);
+    if (wilder) return res.send(wilder);
     res.sendStatus(404);
   } catch (err) {
     console.error(err);
@@ -45,7 +45,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   try {
     const id: number = parseInt(req.params.id, 10);
     const payload: Wilder = req.body;
-    const updatedWilder: SkilledWilder[] = await service.update(payload, id);
+    const updatedWilder: SkilledWilder = await service.update(payload, id);
     return res.status(201).send(updatedWilder);
   } catch (err) {
     console.error(err);
