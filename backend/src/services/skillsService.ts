@@ -13,8 +13,12 @@ const service = {
     return await repo.findBy({ id });
   },
 
-  create: async (newSkill: Skills): Promise<Skills> => {
+  create: async (newSkill: Omit<Skills, "id">): Promise<Skills> => {
     return await repo.save(newSkill);
+  },
+
+  create2: async (name: string): Promise<Skills> => {
+    return await repo.save({ name });
   },
 
   update: async (

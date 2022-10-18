@@ -38,8 +38,8 @@ const service = {
   getAll: async (): Promise<SkilledWilder[]> => {
     return rebuildEager(await wilderRepo.find());
   },
-  getById: async (id: number): Promise<SkilledWilder[]> => {
-    return rebuildEager(await wilderRepo.findBy({ id }));
+  getById: async (id: number): Promise<SkilledWilder> => {
+    return (await rebuildEager(await wilderRepo.findBy({ id })))[0];
   },
   create: async (newWilder: Wilder): Promise<Wilder> => {
     return await wilderRepo.save(newWilder);
@@ -47,12 +47,12 @@ const service = {
   update: async (
     updatedWilder: Wilder,
     wilderId: number
-  ): Promise<SkilledWilder[]> => {
+  ): Promise<SkilledWilder> => {
     const test = await wilderRepo.update(wilderId, updatedWilder);
     return await service.getById(wilderId);
   },
   delete: async (wilderId: number): Promise<DeleteResult> => {
-    const [wilderToDelete] = await service.getById(wilderId);
+    const wilderToDelete = await service.getById(wilderId);
     const skillsToDelete = wilderToDelete.skills;
 
     await Promise.all(
@@ -65,7 +65,7 @@ const service = {
     return await wilderRepo.delete(wilderId);
   },
   getWilderSkills: async (id: number): Promise<BaseSkill[]> => {
-    const [wilder]: SkilledWilder[] = await service.getById(id);
+    const wilder: SkilledWilder = await service.getById(id);
     return wilder.skills;
   },
   addWilderSkill: async (
@@ -77,7 +77,7 @@ const service = {
       skillsId: number;
     } & Wilder_Skills
   > => {
-    const [wilderToUpdate]: SkilledWilder[] = await service.getById(wilderId);
+    const wilderToUpdate: SkilledWilder = await service.getById(wilderId);
     const [skillToAdd]: Skills[] = await skillsRepo.findBy({ id: skillsId });
 
     // vérifier si skill déjà présent
@@ -94,7 +94,7 @@ const service = {
     skillsId: number,
     rating: number
   ) => {
-    const [wilderToUpdate]: SkilledWilder[] = await service.getById(wilderId);
+    const wilderToUpdate: SkilledWilder = await service.getById(wilderId);
     const [skillToDelete]: Skills[] = await skillsRepo.findBy({ id: skillsId });
 
     const [wilderSkill]: Wilder_Skills[] = await wilderSkillsRepo.findBy({
@@ -111,7 +111,7 @@ const service = {
     throw new Error("couldnt find wilder skill");
   },
   deleteWilderSkill: async (wilderId: number, skillsId: number) => {
-    const [wilderToUpdate]: SkilledWilder[] = await service.getById(wilderId);
+    const wilderToUpdate: SkilledWilder = await service.getById(wilderId);
     const [skillToDelete]: Skills[] = await skillsRepo.findBy({ id: skillsId });
 
     // vérifier si skill déjà présent
