@@ -22,4 +22,7 @@ export class oSkills {
 
   @Field()
   name: string;
+
+  @Field({ nullable: true })
+  rating: string;
 }

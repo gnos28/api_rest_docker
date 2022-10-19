@@ -1,18 +1,18 @@
 import axios from "axios";
 
-let backUrl = "http://api_rest-back-1:5000";
-let frontUrl = "http://localhost:5000";
+let fromBackUrl = "http://api_rest-back-1:5000";
+let fromFrontUrl = "http://localhost:5000";
 
-if (process.env.BACKEND_URL) baseUrl = process.env.BACKEND_URL;
+if (process.env.BACKEND_URL) fromFrontUrl = process.env.BACKEND_URL;
 
 const instance = {
   back: axios.create({
-    baseURL: `${backUrl}/api`,
+    baseURL: `${fromBackUrl}`,
     withCredentials: true,
   }),
   front: axios.create({
-    baseURL: `${frontUrl}/api`,
-    withCredentials: true,
+    baseURL: `${fromFrontUrl}`,
+    // withCredentials: true,
   }),
 };
 

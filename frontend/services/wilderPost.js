@@ -1,10 +1,10 @@
 import wilderAPI from "./wilderAPI";
+import create from "../graphql/wilder.createWilder";
 
 const createWilder = async (wilder) => {
-  console.log("createWilder", wilder);
-
   try {
-    const res = (await wilderAPI.front.post(`/wilders`, wilder)).data;
+    const res = (await wilderAPI.front.post(`/graphql`, create(wilder))).data
+      .data.createWilder;
     return res;
   } catch (err) {
     console.error(err);
@@ -12,5 +12,3 @@ const createWilder = async (wilder) => {
 };
 
 export { createWilder };
-
-

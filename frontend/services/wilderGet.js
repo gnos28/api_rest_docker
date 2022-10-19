@@ -1,10 +1,10 @@
 import wilderAPI from "./wilderAPI";
+import findSkills from "../graphql/wilder.deleteWilder";
 
 const getSkills = async () => {
-  console.log("getSkills");
-
   try {
-    const res = (await wilderAPI.front.get(`/skills/`)).data;
+    const res = (await wilderAPI.front.post(`/graphql/`, findSkills)).data.data
+      .Skills;
     return res;
   } catch (err) {
     console.error(err);

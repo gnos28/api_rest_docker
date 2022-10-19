@@ -1,10 +1,13 @@
 import wilderAPI from "./wilderAPI";
+import graphUpdateName from "../graphql/wilder.updateName";
 
 const updateName = async (id, name) => {
   console.log("updateName", id, name);
 
   try {
-    const res = (await wilderAPI.front.put(`/wilders/${id}`, { name })).data;
+    const res = (
+      await wilderAPI.front.post(`/graphql/`, graphUpdateName(id, { name }))
+    ).data.data.updateWilder;
 
     console.log("res", res);
   } catch (err) {

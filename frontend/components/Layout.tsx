@@ -1,7 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styles from "./Layout.module.scss";
+type LayoutType = {
+  children: ReactNode;
+};
 
-export default function Layout({ children }) {
+export default function Layout({ children }: LayoutType) {
   return (
     <>
       <header className={styles.header}>
