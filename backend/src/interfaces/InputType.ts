@@ -1,12 +1,12 @@
-import { Field, InputType, ID } from "type-graphql";
+import { Field, InputType } from "type-graphql";
 
 @InputType()
 export class iWilder {
-  @Field()
-  name?: string;
+  @Field({ nullable: true })
+  name: string;
 
-  @Field()
-  description?: string;
+  @Field({ nullable: true })
+  description: string;
 }
 
 @InputType()

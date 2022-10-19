@@ -1,4 +1,4 @@
-import wilderAPI from "./wilderAPI";
+import wilderAPI from "../api/api";
 import findSkills from "../graphql/wilder.deleteWilder";
 
 const getSkills = async () => {

@@ -10,8 +10,8 @@ import wilderStyles from "./Wilder.module.scss";
 import skillUpdateStyles from "./SkillUpdateModal.module.scss";
 import styles from "./AddAWilder.module.scss";
 import { convertLineBreakToBr } from "../services/convert";
-import { createWilder } from "../services/wilderPost";
-import IWilder from "../interfaces/IWilder";
+import { wilderAPI } from "../api/wilder";
+import { IWilder } from "../interfaces/IWilder";
 
 type Setter<Type> = Dispatch<SetStateAction<Type>>;
 
@@ -56,7 +56,11 @@ export default function AddAWilder({ wilders, setWilders }: AddAWilderProps) {
   const handleConfirm = async (): Promise<void> => {
     // add wilder to database
     if (name.length) {
-      const result: IWilder = await createWilder({ name, description });
+      const result: IWilder = await wilderAPI.create("csr", {
+        name,
+        description,
+      });
+
       const newWilder: IWilder = {
         id: result.id,
         name,

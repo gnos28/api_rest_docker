@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID } from "type-graphql";
+import { Field, ObjectType, ID, Int } from "type-graphql";
 
 @ObjectType()
 export class oWilder {
@@ -11,7 +11,7 @@ export class oWilder {
   @Field({ nullable: true })
   description: string;
 
-  @Field(() => [oSkills])
+  @Field(() => [oSkills], { nullable: true })
   skills: oSkills[];
 }
 
@@ -24,5 +24,5 @@ export class oSkills {
   name: string;
 
   @Field({ nullable: true })
-  rating: string;
+  rating: number;
 }

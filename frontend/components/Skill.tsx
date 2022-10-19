@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./Skill.module.scss";
-import { updateSkillRating } from "../services/wilderUpdate";
+import { wilderAPI } from "../api/wilder";
 import { IRatedSkill } from "../interfaces/ISkill";
 
 type SkillProps = {
   skill: IRatedSkill;
-  wilderId: number;
+  wilderId: string;
 };
 
 const EMPTY_STAR_URL = "/star_empty.svg";
@@ -20,7 +20,7 @@ export default function Skill({ skill, wilderId }: SkillProps) {
     const currentRating = rating;
     const newRating = currentRating > 4 ? 0 : currentRating + 1;
 
-    await updateSkillRating(wilderId, skill.id, newRating);
+    await wilderAPI.updateSkillRating("csr", wilderId, skill.id, newRating);
     setRating(newRating);
   };
 

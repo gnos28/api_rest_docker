@@ -1,4 +1,4 @@
-import wilderAPI from "./wilderAPI";
+import wilderAPI from "../api/api";
 import create from "../graphql/wilder.createWilder";
 
 const createWilder = async (wilder) => {

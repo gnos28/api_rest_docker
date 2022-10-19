@@ -42,12 +42,24 @@ export class WilderResolver {
   }
 
   @Mutation(() => obj.oWilder)
-  async updateWilderSkill(
+  async updateWilderSkillRating(
     @Arg("wilderId") wilderId: number,
     @Arg("skillsId") skillsId: number,
     @Arg("rating") rating: number
   ) {
-    return await wilderService.updateWilderSkill(wilderId, skillsId, rating);
+    return await wilderService.updateWilderSkillRating(
+      wilderId,
+      skillsId,
+      rating
+    );
+  }
+
+  @Mutation(() => obj.oWilder)
+  async updateWilderSkills(
+    @Arg("wilderId") wilderId: number,
+    @Arg("skills", (type) => [input.iSkills]) skills: input.iSkills[]
+  ) {
+    return await wilderService.updateWilderSkills(wilderId, skills);
   }
 
   @Mutation(() => obj.oWilder)

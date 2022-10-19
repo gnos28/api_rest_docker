@@ -1,4 +1,4 @@
-import wilderAPI from "./wilderAPI";
+import wilderAPI from "../api/api";
 import deleteW from "../graphql/wilder.deleteWilder";
 
 const deleteWilder = async (id) => {

@@ -3,14 +3,14 @@ import Image from "next/image";
 import styles from "./SkillUpdateModal.module.scss";
 import skillStyles from "./Skill.module.scss";
 import { getSkills } from "../services/wilderGet";
-import { updateSkills } from "../services/wilderUpdate";
-import IWilder from "../interfaces/IWilder";
+import { IWilder } from "../interfaces/IWilder";
 import { ISkill, IRatedSkill } from "../interfaces/ISkill";
+import { wilderAPI } from "../api/wilder";
 
 type SkillUpdateModalProps = {
   wilderSkills: IRatedSkill[];
   setOpenModal: Dispatch<SetStateAction<boolean>>;
-  wilderId: number;
+  wilderId: string;
   skillSetter: Dispatch<SetStateAction<IRatedSkill[]>>;
   staticSkills: ISkill[];
 };
@@ -30,7 +30,8 @@ export default function SkillUpdateModal({
     setOpenModal(false);
   };
   const handleConfirm = async (): Promise<void> => {
-    await updateSkills(wilderId, activeSkills);
+    await wilderAPI.updateSkills("csr", wilderId, activeSkills);
+
     skillSetter(activeSkills);
     setOpenModal(false);
   };
@@ -56,7 +57,10 @@ export default function SkillUpdateModal({
 
   // à mettre en getStaticProps revalidate: 86400
   const fetchSkills = async (): Promise<void> => {
-    setSkills(await getSkills());
+    // setSkills(
+    //   await wilderAPI.getSkills("csr")
+    //   // await getSkills()
+    //   );
   };
 
   useEffect(() => {

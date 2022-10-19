@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import service from "../services/wilderService";
+// import service from "../services/wilderService";
 import { Skills } from "../models/Skills";
 import { Wilder_Skills } from "../models/Wilder_Skills";
 import { Wilder } from "../models/Wilder";

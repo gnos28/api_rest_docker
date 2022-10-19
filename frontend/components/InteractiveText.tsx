@@ -1,8 +1,8 @@
 import React, { useState, BaseSyntheticEvent, KeyboardEvent } from "react";
-import { updateName, updateDescription } from "../services/wilderUpdate";
 import { convertLineBreakToBr } from "../services/convert";
-import IWilder from "../interfaces/IWilder";
+import { IWilder } from "../interfaces/IWilder";
 import styles from "./InteractiveText.module.scss";
+import { wilderAPI } from "../api/wilder";
 
 type InteractiveTextProps = {
   wilder: IWilder;
@@ -35,8 +35,11 @@ export default function InteractiveText({
   };
 
   const handleUpdate = async (): Promise<void> => {
-    if (type === "h3") await updateName(wilder.id, text);
-    if (type === "p") await updateDescription(wilder.id, text);
+    console.log("wilder", wilder);
+
+    if (type === "h3") await wilderAPI.updateName("csr", wilder.id, text);
+    if (type === "p") await wilderAPI.updateDescription("csr", wilder.id, text);
+
     setTextAsInput(false);
   };
 

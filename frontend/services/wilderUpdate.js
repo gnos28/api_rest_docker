@@ -1,4 +1,4 @@
-import wilderAPI from "./wilderAPI";
+import wilderAPI from "../api/api";
 import graphUpdateName from "../graphql/wilder.updateName";
 
 const updateName = async (id, name) => {

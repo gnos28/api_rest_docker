@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
 import Head from "next/head";
-import wilderAPI from "../services/wilderAPI";
+import { wilderAPI } from "../api/wilder";
 import Wilder from "../components/Wilder";
 import Layout from "../components/Layout";
 import AddAWilder from "../components/AddAWilder";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import styles from "../styles/Home.module.css";
-import IWilder from "../interfaces/IWilder";
+import { IWilder } from "../interfaces/IWilder";
 import { ISkill } from "../interfaces/ISkill";
-import wilderAll from "../graphql/wilder.all";
+import { skillAPI } from "../api/skill";
 
 type HomeProps = {
   wildersStatic: IWilder[];
@@ -99,38 +99,9 @@ export async function getStaticProps() {
   let wildersStatic: IWilder[] = [];
   let staticSkills: ISkill[] = [];
 
-  const wilderQuery = `query Query {
-    Wilders {
-      id
-      name
-      description
-      skills {
-        id
-        name
-      }
-    }
-  }`;
-
-  const skillsQuery = `query Skills {
-    Skills {
-      id
-      name
-    }
-  }`;
-
   try {
-    wildersStatic = (
-      await wilderAPI.back.post<{ data: { Wilders: IWilder[] } }>(
-        "/graphql",
-        wilderAll
-      )
-    ).data.data.Wilders;
-
-    staticSkills = (
-      await wilderAPI.back.post<{ data: { Skills: ISkill[] } }>("/graphql", {
-        query: skillsQuery,
-      })
-    ).data.data.Skills;
+    wildersStatic = await wilderAPI.getAll("ssr");
+    staticSkills = await skillAPI.getAll("ssr");
   } catch (err) {
     console.error(err);
   }

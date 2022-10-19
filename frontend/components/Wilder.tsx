@@ -4,9 +4,9 @@ import Skill from "./Skill";
 import SkillUpdateModal from "./SkillUpdateModal";
 import InteractiveText from "./InteractiveText";
 import styles from "./Wilder.module.scss";
-import { deleteWilder } from "../services/wilderDelete";
-import IWilder from "../interfaces/IWilder";
+import { IWilder } from "../interfaces/IWilder";
 import { ISkill, IRatedSkill } from "../interfaces/ISkill";
+import { wilderAPI } from "../api/wilder";
 
 type WilderProps = {
   wilder: IWilder;
@@ -57,7 +57,7 @@ export default function Wilder({
   };
 
   const handleBinClick = async (): Promise<void> => {
-    await deleteWilder(wilder.id);
+    await wilderAPI.delete("csr", wilder.id);
     setWilders(wilders.filter((w: IWilder) => w.id !== wilder.id));
   };
 
