@@ -2,7 +2,6 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import styles from "./SkillUpdateModal.module.scss";
 import skillStyles from "./Skill.module.scss";
-import { getSkills } from "../services/wilderGet";
 import { IWilder } from "../interfaces/IWilder";
 import { ISkill, IRatedSkill } from "../interfaces/ISkill";
 import { wilderAPI } from "../api/wilder";
